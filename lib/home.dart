@@ -20,6 +20,28 @@ class _HomeState extends State<Home> {
   // }
 
   Controller controller = Controller();
+  late ReactionDisposer reactionDisposer;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // autorun((_) {
+    //   // ignore: avoid_print
+    //   print(controller.formularioValidado);
+    // });
+
+    reactionDisposer = reaction((_) => controller.usuarioLogado, (valor) {
+      // ignore: avoid_print
+      print(valor);
+    });
+  }
+
+  @override
+  void dispose() {
+    reactionDisposer();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +89,17 @@ class _HomeState extends State<Home> {
                   return ElevatedButton(
                     onPressed: controller.formularioValidado
                         ? () {
-                            //controller.incrementar();
+                            controller.logar();
                           }
                         : null,
-                    child: const Text(
-                      "Logar",
-                      style: TextStyle(color: Colors.black, fontSize: 30),
-                    ),
+                    child: controller.carregando
+                        ? const CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Colors.white),
+                          )
+                        : const Text(
+                            "Logar",
+                            style: TextStyle(color: Colors.black, fontSize: 30),
+                          ),
                   );
                 }))
           ],

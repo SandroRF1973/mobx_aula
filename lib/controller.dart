@@ -7,7 +7,7 @@ abstract class ControllerBase with Store {
   ControllerBase() {
     autorun((_) {
       // ignore: avoid_print
-      print(email);
+      //print(email);
     });
   }
 
@@ -16,6 +16,12 @@ abstract class ControllerBase with Store {
 
   @observable
   String senha = "";
+
+  @observable
+  bool usuarioLogado = false;
+
+  @observable
+  bool carregando = false;
 
   @computed
   String get emailSenha => "$email - $senha";
@@ -28,6 +34,16 @@ abstract class ControllerBase with Store {
 
   @action
   void setSenha(valor) => senha = valor;
+
+  @action
+  Future<void> logar() async {
+    carregando = true;
+
+    await Future.delayed(const Duration(seconds: 3));
+
+    carregando = false;
+    usuarioLogado = true;
+  }
 
   // @observable
   // int contador = 0;
