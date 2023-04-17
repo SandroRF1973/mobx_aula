@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:mobx_aula/controller.dart';
+import 'package:mobx_aula/principal.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -31,9 +32,12 @@ class _HomeState extends State<Home> {
     //   print(controller.formularioValidado);
     // });
 
-    reactionDisposer = reaction((_) => controller.usuarioLogado, (valor) {
-      // ignore: avoid_print
-      print(valor);
+    reactionDisposer =
+        reaction((_) => controller.usuarioLogado, (usuarioLogado) {
+      if (usuarioLogado) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (_) => Principal()));
+      }
     });
   }
 
