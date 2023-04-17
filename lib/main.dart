@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobx_aula/controller.dart';
 import 'package:mobx_aula/home.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MaterialApp(
-    home: Home(),
+  runApp(MultiProvider(
+    providers: [Provider<Controller>(create: (_) => Controller())],
+    child: const MaterialApp(home: Home()),
   ));
 }
